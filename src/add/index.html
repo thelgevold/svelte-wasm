@@ -1,0 +1,15 @@
+<html>
+  <body>
+    <div id="main"></div>
+    <script src="wasm/add_bin.js "></script>
+
+    <script>
+      Module.onRuntimeInitialized = () => {
+        var scriptElm = document.createElement('script');
+        scriptElm.src = 'assets/bundle.min.js';
+        document.body.appendChild(scriptElm);
+      };
+      
+    </script> 
+  </body>
+</html>

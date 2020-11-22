@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  bazel_env:
+    build: .
+    container_name: bazel_env
+    ports:
+      - "7000:7000"    
+    volumes:
+            - "./emscripten_toolchain:/usr/emscripten_toolchain"
+            - "./src:/usr/src"

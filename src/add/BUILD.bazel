@@ -1,0 +1,45 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+load("@build_bazel_rules_svelte//:defs.bzl", "svelte", "bundle_prod", "bundle_dev")
+
+cc_binary(
+    name = "add_bin",
+    srcs = ["add.cc"],
+)
+
+wasm_cc_binary(
+    name = "add",
+    cc_target = ":add_bin",
+)
+
+svelte(
+  name = "App",
+  srcs = [
+    "main.js",
+    "add-service.js",
+    "externs.js"
+  ],
+  entry_point = "App.svelte",
+  deps = []
+)
+
+bundle_prod(
+  name = "bundle",
+  entry_point = "main.js",
+  closure_config = ":closure-config.json",
+  deps = [
+    ":App"
+  ]
+)
+
+nodejs_binary(
+    name = "server",
+    data = [
+        "@npm_app//express",
+        ":bundle",
+        ":index.html",
+        ":add"
+       ],
+    entry_point = ":server.js",
+)

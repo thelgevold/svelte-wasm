@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@bazel/ibazel": "0.14.0"
+  },
+  "dependencies": {
+    "express": "4.17.1"
+  },
+  "scripts": {
+    "build": "ibazel run //src/add:server",
+    "dev": "docker-compose up"
+  }
+}
